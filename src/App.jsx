@@ -13,11 +13,15 @@ const App = () => {
   const [totalPages, setTotalPages] = useState(0);
   // state for pagination
   const [page, setPage] = useState(1);
+  // state for loading
+  const [loading, setLoading] = useState(false);
 
   // function for fetching images
   const fetchImages = useCallback (async () => {
     try {
       if(searchInput.current.value){
+        // setErrorMsg(' ');
+        setLoading(true);
       const { data } = await axios.get(
         `${API_URL}?query=${
           searchInput.current.value
@@ -29,10 +33,12 @@ const App = () => {
       console.log(data);
       setImages(data.results);
       setTotalPages(data.total_pages);
+      setLoading(false);
       }
     } catch (error) {
+      // setErrorMsg('Error fetching images. Try again later.');
       console.log(error);
-      if (error.response) console.log(error.response.data);
+      setLoading(false);
     }
   }, [page]);
 
@@ -80,7 +86,11 @@ const App = () => {
           <div onClick={() => handleSelection("shoes")}>Shoes</div>
           <div onClick={() => handleSelection("cats")}>Cats</div>
         </div>
-        <div className="images">
+        { loading ? (
+          <p className="loading">Loading....</p> 
+        ) : (
+          <>
+            <div className="images">
           {images.map((image) => {
             return (
               <img
@@ -100,6 +110,8 @@ const App = () => {
             <Button onClick={() => setPage(page + 1)}>Next</Button>
           )}
         </div>
+          </>
+        )}
       </div>
     </>
   );
