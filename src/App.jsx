@@ -27,10 +27,9 @@ const App = () => {
       setTotalPages(data.totalPages);
     } catch (error) {
       console.log(error);
-      if(error.response)
-        console.log(error.response.data);
+      if (error.response) console.log(error.response.data);
     }
-  }
+  };
 
   // function for getting input values
   const handleSearch = (event) => {
@@ -43,7 +42,6 @@ const App = () => {
   const handleSelection = (selection) => {
     searchInput.current.value = selection;
     fetchImages();
-
   };
 
   return (
@@ -66,6 +64,18 @@ const App = () => {
           <div onClick={() => handleSelection("space")}>Space</div>
           <div onClick={() => handleSelection("shoes")}>Shoes</div>
           <div onClick={() => handleSelection("cats")}>Cats</div>
+        </div>
+        <div className="images">
+          {images.map((image) => {
+            return (
+              <img
+                key={image.id}
+                src={image.urls.small}
+                alt={image.alt_description}
+                className="image"
+              />
+            );
+          })}
         </div>
       </div>
     </>
