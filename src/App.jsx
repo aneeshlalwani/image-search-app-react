@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import "./index.css";
 import axios from "axios";
@@ -8,6 +8,9 @@ const IMAGES_PER_PAGE = 20;
 
 const App = () => {
   const searchInput = useRef(null);
+  // hooks for storing images
+  const [images, setImages] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
 
   // function for fetching images
   const fetchImages = async () => {
@@ -20,6 +23,8 @@ const App = () => {
         }`
       );
       console.log(data);
+      setImages(data.results);
+      setTotalPages(data.totalPages);
     } catch (error) {
       console.log(error);
       if(error.response)
