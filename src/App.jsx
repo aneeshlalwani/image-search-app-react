@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Form } from "react-bootstrap";
+import React, { useRef, useState, useEffect } from "react";
+import { Button, Form } from "react-bootstrap";
 import "./index.css";
 import axios from "axios";
 
@@ -12,38 +12,50 @@ const App = () => {
   const [images, setImages] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
 
+  // state for pagination
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    fetchImages();
+  }, [page]);
+
   // function for fetching images
   const fetchImages = async () => {
     try {
       const { data } = await axios.get(
         `${API_URL}?query=${
           searchInput.current.value
-        }&page=1&per_page=${IMAGES_PER_PAGE}&client_id=${
+        }&page=${page}&per_page=${IMAGES_PER_PAGE}&client_id=${
           import.meta.env.VITE_API_KEY
         }`
       );
       console.log(data);
       setImages(data.results);
-      setTotalPages(data.totalPages);
+      setTotalPages(data.total_pages);
     } catch (error) {
       console.log(error);
       if (error.response) console.log(error.response.data);
     }
   };
 
+  // function for resetting search
+  const resetSearch = () => {
+    setPage(1);
+    fetchImages();
+  }
   // function for getting input values
   const handleSearch = (event) => {
     event.preventDefault();
     console.log(searchInput.current.value);
-    fetchImages();
+    resetSearch();
   };
 
   // function for quick search option
   const handleSelection = (selection) => {
     searchInput.current.value = selection;
-    fetchImages();
+    resetSearch();
   };
-
+  console.log("page", page);
   return (
     <>
       <div className="container">
@@ -76,6 +88,14 @@ const App = () => {
               />
             );
           })}
+        </div>
+        <div className="buttons">
+          {page > 1 && (
+            <Button onClick={() => setPage(page - 1)}>Previous</Button>
+          )}
+          {page < totalPages && (
+            <Button onClick={() => setPage(page + 1)}>Next</Button>
+          )}
         </div>
       </div>
     </>
