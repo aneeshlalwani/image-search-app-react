@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-import { Button, Form, Container } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import "./index.css";
 import axios from "axios";
-
+import Logo from './assets/logo.jpg';
 const API_URL = "https://api.unsplash.com/search/photos";
 const IMAGES_PER_PAGE = 20;
 
@@ -67,8 +67,9 @@ const App = () => {
   console.log("page", page);
   return (
     <>
-    <Container fluid className="">
+
       <div className="container">
+        <img src={Logo} alt="unsplash logo" className="logo"/>
         <h1 className="title">Unsplash Image Search</h1>
         <div className="search-section">
           <Form onSubmit={handleSearch}>
@@ -114,7 +115,6 @@ const App = () => {
           </>
         )}
       </div>
-      </Container>
     </>
   );
 };

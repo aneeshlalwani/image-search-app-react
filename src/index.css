@@ -31,7 +31,14 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
-
+.logo{
+    max-width: 150px;
+    width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
 .title {
     text-align: center;
     margin-top: var(--default-margin);
@@ -54,7 +61,7 @@ body {
     box-shadow: none;
     outline: none;
     border: 1px solid #000;
-    padding: 8px 15px;
+    padding: 8px 10px;
     font-weight: bold;
     color: #000;
     font-size: 18px;
@@ -106,7 +113,7 @@ body {
 }
 
 .filters>* {
-    padding: 8px 20px;
+    padding: 8px 15px;
     background: #F8C630;
     color: #000000;
     font-weight: bold;
