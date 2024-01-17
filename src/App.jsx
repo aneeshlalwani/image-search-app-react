@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Container } from "react-bootstrap";
 import "./index.css";
 import axios from "axios";
 
@@ -67,8 +67,9 @@ const App = () => {
   console.log("page", page);
   return (
     <>
+    <Container fluid className="">
       <div className="container">
-        <h1 className="title">Image Search From Unsplash</h1>
+        <h1 className="title">Unsplash Image Search</h1>
         <div className="search-section">
           <Form onSubmit={handleSearch}>
             <Form.Control
@@ -83,7 +84,7 @@ const App = () => {
           <div onClick={() => handleSelection("nature")}>Nature</div>
           <div onClick={() => handleSelection("birds")}>Birds</div>
           <div onClick={() => handleSelection("space")}>Space</div>
-          <div onClick={() => handleSelection("shoes")}>Shoes</div>
+          <div onClick={() => handleSelection("watches")}>Watches</div>
           <div onClick={() => handleSelection("cats")}>Cats</div>
         </div>
         { loading ? (
@@ -113,6 +114,7 @@ const App = () => {
           </>
         )}
       </div>
+      </Container>
     </>
   );
 };
